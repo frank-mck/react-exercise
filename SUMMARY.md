@@ -15,3 +15,8 @@ Formik: {
 ```
 
 This choice is based on its user-friendly, performant, lightweight and flexible nature, which aligns with the goal of writing clean and production-ready code with a focus on quality.
+
+## Why have a chosen Vod over Yup for form validation?
+
+These two validation libraries are simple to learn, easy to use and have similar syntax.
+I have chosen Vod simply because it has superior TypeScript, which would provide a better development experience in a TypeScript codebase.

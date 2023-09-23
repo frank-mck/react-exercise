@@ -19,7 +19,8 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-hook-form": "^7.46.2",
-		"styled-components": "^5.3.6"
+		"styled-components": "^5.3.6",
+		"zod": "^3.22.2"
 	},
 	"devDependencies": {
 		"@cruk/eslint-config": "^2.1.0",
