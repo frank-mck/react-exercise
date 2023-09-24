@@ -1,27 +1,31 @@
-import { Heading, Box } from "@cruk/cruk-react-components"
-import { NasaSearchParams } from "../../types"
-import Results from "../Results"
-import NasaForm from "./NasaForm"
+import { Heading, Box } from "@cruk/cruk-react-components";
+import { NasaSearchParams } from "../../types";
+import Results from "../Results";
+import NasaForm from "./NasaForm";
+import { useState } from "react";
 
 export const HomePage = () => {
-	//
-	// form and validation code here
+  const [nasaSearchParams, setNasaSearchParams] = useState<NasaSearchParams>(
+    defaultParams(),
+  );
 
-	const exampleParam: NasaSearchParams = {
-		keywords: "moon",
-		yearStart: 2000,
-		mediaType: "image",
-	}
+  function defaultParams(): NasaSearchParams {
+    return { keywords: "moon", yearStart: 2000, mediaType: "image" };
+  }
 
-	return (
-		<Box marginTop="s" paddingTop="s">
-			<Heading h1>React Exercise</Heading>
+  const onSubmit: (data: NasaSearchParams) => void = (data) => {
+    setNasaSearchParams(data);
+  };
 
-			<NasaForm />
+  return (
+    <Box marginTop="s" paddingTop="s">
+      <Heading h1>Nasa Form</Heading>
 
-			<Results searchParams={exampleParam} />
-		</Box>
-	)
-}
+      <NasaForm onSubmit={onSubmit} />
 
-export default HomePage
+      <Results searchParams={nasaSearchParams} />
+    </Box>
+  );
+};
+
+export default HomePage;

@@ -1,6 +1,6 @@
-import { z, ZodError } from "zod";
+import { z } from "zod";
 
-const MEDIA_TYPE_VALUES = ["audio", "video", "image"] as const;
+export const MEDIA_TYPE_VALUES = ["audio", "video", "image"] as const;
 
 const NasaFormValidation = z.object({
   keywords: z
@@ -8,42 +8,38 @@ const NasaFormValidation = z.object({
     .trim()
     .min(2, { message: "Keywords must have at least 2 characters." })
     .max(50, { message: "Keywords must have at most 50 characters." })
-    .nonempty({ message: "Keywords are required." })
     .default(""),
 
-  mediaType: z
-    .enum(MEDIA_TYPE_VALUES, {
-      required_error: "Please select a media type.",
-    })
-    .optional()
-    .nullable(),
+  mediaType: z.enum(MEDIA_TYPE_VALUES, {
+    errorMap: () => {
+      return { message: "Please select a media type." };
+    },
+  }),
 
   yearStart: z
     .string()
-    .trim()
-    .length(4)
-    .regex(/^[0-9]+$/, { message: "Please enter a valid number." })
-    .min(1900, { message: "Year start must be after 1900." })
-    .max(new Date().getFullYear(), {
-      message: "Year start must not be in the future.",
+    .refine(
+      (value) => {
+        return !isNaN(Number(value));
+      },
+      {
+        message: "Please enter a valid number.",
+      },
+    )
+    .transform((value) => {
+      return parseInt(value, 10);
     })
-    .default("")
-    .nullable()
-    .optional(),
+    .refine((value) => typeof value === "string" || value >= 1900, {
+      message: "Year start must be after 1900.",
+    })
+    .refine(
+      (value) => typeof value === "string" || value <= new Date().getFullYear(),
+      {
+        message: "Year start must not be in the future.",
+      },
+    ),
 });
-
-const ValidateNasaForm = (data: FormData): string[] | null => {
-  try {
-    NasaFormValidation.parse(data);
-    return null;
-  } catch (error) {
-    if (error instanceof ZodError) {
-      return error.issues.map((issue) => issue.message);
-    }
-    throw error;
-  }
-};
 
 export type NasaFormValidationType = z.infer<typeof NasaFormValidation>;
 
-export { NasaFormValidation, ValidateNasaForm };
+export { NasaFormValidation };
