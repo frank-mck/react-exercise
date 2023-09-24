@@ -1,24 +1,26 @@
 import { z, ZodError } from "zod";
 
-const mediaTypeValues = ["audio", "video", "image"] as const;
+const MEDIA_TYPE_VALUES = ["audio", "video", "image"] as const;
 
-const validation = z.object({
+const NasaFormValidation = z.object({
   keywords: z
-    .string().trim()
+    .string()
+    .trim()
     .min(2, { message: "Keywords must have at least 2 characters." })
     .max(50, { message: "Keywords must have at most 50 characters." })
     .nonempty({ message: "Keywords are required." })
     .default(""),
 
-  mediaType: 
-    z.enum(mediaTypeValues, {
+  mediaType: z
+    .enum(MEDIA_TYPE_VALUES, {
       required_error: "Please select a media type.",
     })
     .optional()
     .nullable(),
 
   yearStart: z
-    .string().trim()
+    .string()
+    .trim()
     .length(4)
     .regex(/^[0-9]+$/, { message: "Please enter a valid number." })
     .min(1900, { message: "Year start must be after 1900." })
@@ -30,9 +32,9 @@ const validation = z.object({
     .optional(),
 });
 
-const validate = (data: FormData): string[] | null => {
+const ValidateNasaForm = (data: FormData): string[] | null => {
   try {
-    validation.parse(data);
+    NasaFormValidation.parse(data);
     return null;
   } catch (error) {
     if (error instanceof ZodError) {
@@ -42,4 +44,6 @@ const validate = (data: FormData): string[] | null => {
   }
 };
 
-export default { validation, validate };
+export type NasaFormValidationType = z.infer<typeof NasaFormValidation>;
+
+export { NasaFormValidation, ValidateNasaForm };
