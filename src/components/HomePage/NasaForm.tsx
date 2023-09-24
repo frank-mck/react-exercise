@@ -1,18 +1,23 @@
-import { Button, Select, Text } from "@cruk/cruk-react-components";
-import { useForm } from "react-hook-form";
+import {
+  Box,
+  Button,
+  Select,
+  TextField,
+  ErrorText,
+} from "@cruk/cruk-react-components";
+import { FieldError, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BoxFormWrapper, StylesTextField } from "./styles";
+import { BoxFormWrapper } from "./styles";
 import {
   NasaFormValidationType,
   NasaFormValidation,
   MEDIA_TYPE_VALUES,
 } from "../../utils/nasaFormValidation";
-import { NasaSearchParams } from "../../types";
 
 export const NasaForm = ({
   onSubmit,
 }: {
-  onSubmit: (data: NasaSearchParams) => void;
+  onSubmit: (data: NasaFormValidationType) => void;
 }) => {
   const {
     register,
@@ -25,22 +30,30 @@ export const NasaForm = ({
 
   const { keywords, mediaType, yearStart } = errors;
 
+  const ValidationMessage = ({ type }: { type: FieldError | undefined }) => {
+    return (
+      <ErrorText paddingVertical="xxs">{type ? type?.message : null}</ErrorText>
+    );
+  };
+
   return (
     <BoxFormWrapper>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <StylesTextField label="Keywords" {...register("keywords")} />
-        <Text textColor="red">{keywords ? keywords.message : null}</Text>
+        <Box marginVertical="none">
+          <TextField label="Keywords" {...register("keywords")} />
+          <ValidationMessage type={keywords} />
 
-        <StylesTextField label="Year start" {...register("yearStart")} />
-        <Text textColor="red">{yearStart ? yearStart.message : null}</Text>
+          <TextField label="Year start" {...register("yearStart")} />
+          <ValidationMessage type={yearStart} />
 
-        <Select label="Media type" {...register("mediaType")}>
-          <option selected></option>
-          {MEDIA_TYPE_VALUES.map((type) => {
-            return <option selected={false}>{type}</option>;
-          })}
-        </Select>
-        <Text textColor="red">{mediaType ? mediaType.message : null}</Text>
+          <Select label="Media type" {...register("mediaType")}>
+            <option selected></option>
+            {MEDIA_TYPE_VALUES.map((type) => {
+              return <option selected={false}>{type}</option>;
+            })}
+          </Select>
+          <ValidationMessage type={mediaType} />
+        </Box>
 
         <Button full appearance="primary" onClick={() => trigger()}>
           submit

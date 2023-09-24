@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box, TextField } from "@cruk/cruk-react-components"
+import { Box } from "@cruk/cruk-react-components"
 
 export const BoxFormWrapper = styled(Box)`
   display: flex;
@@ -9,7 +9,4 @@ export const BoxFormWrapper = styled(Box)`
   border: 1.5px solid black;
   padding: 2rem;
   border-radius: 2px;
-`
-
-export const StylesTextField = styled(TextField)`
-`
+`;
