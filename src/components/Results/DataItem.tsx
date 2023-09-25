@@ -3,26 +3,25 @@ import { DataType } from "../../types";
 import { Box, Button, Heading, Text } from "@cruk/cruk-react-components";
 import {
   StyledBadge,
-  GidColumnWrapper,
+  GridColumnWrapper,
   JustifiedBetweenWrapper,
 } from "./styles";
-import Image from "next/image";
 
 const MAX_DESCRIPTION = 900;
 
 const DataItem = ({
+  media,
   data,
-  imageUrl,
 }: {
+  media: JSX.Element;
   data: DataType | undefined;
-  imageUrl: string | undefined;
 }) => {
   const [showMore, setShowMore] = useState(false);
 
   const keywords = data?.keywords?.[0]
     ?.split(",")
     .map((word, index) => (
-      <StyledBadge key={`${imageUrl}${index}`}>{word}</StyledBadge>
+      <StyledBadge key={`${media}${index}`}>{word}</StyledBadge>
     ));
 
   const toggleShowMore = () => {
@@ -37,7 +36,7 @@ const DataItem = ({
     }
   };
 
-  const ToggleDescriptionLengthBtns = (): JSX.Element => {
+  const ToggleDescriptionLengthBtn = (): JSX.Element => {
     return (
       <Button size="m" appearance="tertiary" onClick={toggleShowMore}>
         {showMore ? "...see less" : "...see more"}
@@ -58,22 +57,15 @@ const DataItem = ({
         {data?.center ? data?.center : "Center unknown"}:{" "}
         {data?.location ? data?.location : "Location unknown"}
       </Text>
-      <GidColumnWrapper padding="none" margin="none">
-        <Image
-          alt="nasa-image"
-          objectFit="cover"
-          src={imageUrl || "/no-image.jpg"}
-          width={1000}
-          height={1000}
-        />
-
+      <GridColumnWrapper padding="none" margin="none">
+        {media}
         <Text textSize="m">
           <Description />
           {data?.description && data?.description.length >= MAX_DESCRIPTION ? (
-            <ToggleDescriptionLengthBtns />
+            <ToggleDescriptionLengthBtn />
           ) : null}
         </Text>
-      </GidColumnWrapper>
+      </GridColumnWrapper>
     </Box>
   );
 };

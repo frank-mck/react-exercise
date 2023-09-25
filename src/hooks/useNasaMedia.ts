@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { NasaResponse } from "../types";
 
 export const useNasaMedia = (href: string | undefined) => {
   const headers = {
@@ -7,7 +6,7 @@ export const useNasaMedia = (href: string | undefined) => {
     "Content-Type": "application/json",
   };
 
-  return useQuery<NasaResponse>(
+  return useQuery<string[]>(
     ["nasaMedia", href],
     () =>
       fetch(href as string, {
