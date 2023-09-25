@@ -1,29 +1,45 @@
-import { Heading, Box } from "@cruk/cruk-react-components";
+import {
+  Heading,
+  Box,
+  Text,
+  ErrorText,
+  Loader,
+} from "@cruk/cruk-react-components";
 import { NasaSearchParams } from "../../types";
 import Results from "../Results";
-import NasaForm from "./NasaForm";
+import NasaForm, { defaultParams } from "./NasaForm";
 import { useState } from "react";
+import useNasaQuery from "../../hooks/useNasaQuery";
 
 export const HomePage = () => {
   const [nasaSearchParams, setNasaSearchParams] = useState<NasaSearchParams>(
     defaultParams(),
   );
-
-  function defaultParams(): NasaSearchParams {
-    return { keywords: "moon", yearStart: 2000, mediaType: "image" };
-  }
+  const { data: nasaData, error, isFetching } = useNasaQuery(nasaSearchParams);
 
   const onSubmit: (data: NasaSearchParams) => void = (data) => {
     setNasaSearchParams(data);
+  };
+
+  const HandledResults = () => {
+    if (isFetching) {
+      return <Loader />;
+    } else if (error) {
+      return (
+        <ErrorText>Sorry, there was an error fetching the results.</ErrorText>
+      );
+    } else {
+      return <Results nasaData={nasaData} />;
+    }
   };
 
   return (
     <Box marginTop="s" paddingTop="s">
       <Heading h1>Nasa Form</Heading>
 
-      <NasaForm onSubmit={onSubmit} />
+      <NasaForm onSubmit={onSubmit} isFetching={isFetching} />
 
-      <Results searchParams={nasaSearchParams} />
+      <HandledResults />
     </Box>
   );
 };

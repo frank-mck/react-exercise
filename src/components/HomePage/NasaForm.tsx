@@ -14,10 +14,16 @@ import {
   MEDIA_TYPE_VALUES,
 } from "../../utils/nasaFormValidation";
 
+export const defaultParams = (): NasaFormValidationType => {
+  return { keywords: "moon", yearStart: 2000, mediaType: "image" };
+};
+
 export const NasaForm = ({
   onSubmit,
+  isFetching,
 }: {
   onSubmit: (data: NasaFormValidationType) => void;
+  isFetching: boolean;
 }) => {
   const {
     register,
@@ -40,23 +46,40 @@ export const NasaForm = ({
     <BoxFormWrapper>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box marginVertical="none">
-          <TextField label="Keywords" {...register("keywords")} />
+          <TextField
+            defaultValue={defaultParams().keywords}
+            label="Keywords"
+            {...register("keywords")}
+          />
           <ValidationMessage type={keywords} />
 
-          <TextField label="Year start" {...register("yearStart")} />
+          <TextField
+            defaultValue={defaultParams().yearStart}
+            label="Year start"
+            {...register("yearStart")}
+          />
           <ValidationMessage type={yearStart} />
 
-          <Select label="Media type" {...register("mediaType")}>
-            <option selected></option>
+          <Select
+            defaultValue={defaultParams().mediaType}
+            label="Media type"
+            {...register("mediaType")}
+          >
+            <option></option>
             {MEDIA_TYPE_VALUES.map((type) => {
-              return <option selected={false}>{type}</option>;
+              return <option key={type}>{type}</option>;
             })}
           </Select>
           <ValidationMessage type={mediaType} />
         </Box>
 
-        <Button full appearance="primary" onClick={() => trigger()}>
-          submit
+        <Button
+          disabled={isFetching}
+          full
+          appearance="primary"
+          onClick={() => trigger()}
+        >
+          {isFetching ? "Submitting..." : "Submit"}
         </Button>
       </form>
     </BoxFormWrapper>
