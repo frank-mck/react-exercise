@@ -65,6 +65,7 @@ export const NasaForm = ({
             label="Media type"
             {...register("mediaType")}
           >
+            {/* Add an empty option */}
             <option></option>
             {MEDIA_TYPE_VALUES.map((type) => {
               return <option key={type}>{type}</option>;

@@ -7,12 +7,12 @@ import useNasaQuery from "../../hooks/useNasaQuery";
 
 export const HomePage = () => {
   const [nasaSearchParams, setNasaSearchParams] = useState<NasaSearchParams>(
-    defaultParams(),
+    defaultParams,
   );
   const { data: nasaData, error, isFetching } = useNasaQuery(nasaSearchParams);
 
-  const onSubmit: (data: NasaSearchParams) => void = (data) => {
-    setNasaSearchParams(data);
+  const onSubmit: (nasaParams: NasaSearchParams) => void = (nasaParams) => {
+    setNasaSearchParams(nasaParams);
   };
 
   const HandledResults = () => {
@@ -30,7 +30,7 @@ export const HomePage = () => {
   };
 
   return (
-    <Box  paddingTop="s">
+    <Box paddingTop="s">
       <Heading h1>Nasa Form</Heading>
 
       <NasaForm onSubmit={onSubmit} isFetching={isFetching} />

@@ -7,7 +7,7 @@ import {
   JustifiedBetweenWrapper,
 } from "./styles";
 
-const MAX_DESCRIPTION = 600;
+const MAX_DESCRIPTION_LENGTH = 600;
 
 const NasaArticle = ({
   media,
@@ -32,7 +32,7 @@ const NasaArticle = ({
     if (showMore) {
       return data?.description;
     } else {
-      return `${data?.description?.substring(0, MAX_DESCRIPTION)}`;
+      return `${data?.description?.substring(0, MAX_DESCRIPTION_LENGTH)}`;
     }
   };
 
@@ -61,7 +61,8 @@ const NasaArticle = ({
         {media}
         <Text textSize="m">
           <Description />
-          {data?.description && data?.description.length >= MAX_DESCRIPTION ? (
+          {data?.description &&
+          data?.description.length >= MAX_DESCRIPTION_LENGTH ? (
             <ToggleDescriptionLengthBtn />
           ) : null}
         </Text>

@@ -7,7 +7,7 @@ I thoroughly enjoyed completing this tech test. I am pleased with the results an
 production-ready requirement.
 
 
-## Tools and Libraries I used
+## Tools and Libraries used
 - React Hook Form
 - Vod validation library
 - CRUK React Component Library

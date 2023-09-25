@@ -7,11 +7,11 @@ import useNasaMedia from "../../hooks/useNasaMedia";
 const Media = ({ type, href }: { type: string; href: string | undefined }) => {
   const { data: nasaMedia } = useNasaMedia(href);
 
-  const MediaView = () => {
-    const validImageUrl = nasaMedia?.find((url) =>
-      ["medium", "small", "large"].some((size) => url.includes(size)),
-    );
+  const validImageUrl = nasaMedia?.find((url) =>
+    ["medium", "small", "large"].some((size) => url.includes(size)),
+  );
 
+  const MediaView = () => {
     switch (type) {
       case "image":
         return (

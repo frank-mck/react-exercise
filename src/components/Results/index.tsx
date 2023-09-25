@@ -21,7 +21,7 @@ export const Results = ({
     setCurrentPage(newPage);
   };
 
-  const itemsToRender = () => {
+  const itemsPerPage = () => {
     return items?.slice(
       (currentPage - 1) * ITEMS_PER_PAGE,
       currentPage * ITEMS_PER_PAGE,
@@ -30,7 +30,7 @@ export const Results = ({
 
   return (
     <Box paddingBottom="m" marginBottom="xl">
-      {itemsToRender()?.map((item, index) => {
+      {itemsPerPage()?.map((item, index) => {
         const data = item?.data?.[0];
 
         return (
