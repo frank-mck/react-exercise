@@ -1,8 +1,10 @@
-import { Box } from "@cruk/cruk-react-components";
+import { Box, ErrorText, Pagination } from "@cruk/cruk-react-components";
 import { NasaResponse, NasaSearchParams } from "../../types";
-import DataItem from "./DataItem";
-import useNasaMedia from "../../hooks/useNasaMedia";
+import NasaArticle from "./NasaArticle";
 import Media from "./Media";
+import { useState } from "react";
+
+const ITEMS_PER_PAGE = 10;
 
 export const Results = ({
   nasaData,
@@ -11,36 +13,47 @@ export const Results = ({
   nasaData: NasaResponse | undefined;
   nasaSearchParams: NasaSearchParams;
 }) => {
-  stringifyData();
+  const [currentPage, setCurrentPage] = useState(1);
+
   const items = nasaData?.collection?.items;
 
-  function stringifyData() {
-    const jsonData = JSON.stringify(nasaData);
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
-    try {
-      return JSON.parse(jsonData);
-    } catch (error) {
-      console.error("Invalid JSON:", error);
-    }
-  }
+  const itemsToRender = () => {
+    return items?.slice(
+      (currentPage - 1) * ITEMS_PER_PAGE,
+      currentPage * ITEMS_PER_PAGE,
+    );
+  };
 
   return (
     <Box paddingBottom="m" marginBottom="xl">
-      {items?.map((item, index) => {
-        const { data: nasaMedia } = useNasaMedia(item?.href);
-
+      {itemsToRender()?.map((item, index) => {
         const data = item?.data?.[0];
 
         return (
-          <DataItem
+          <NasaArticle
             media={
-              <Media type={nasaSearchParams.mediaType} nasaMedia={nasaMedia} />
+              <Media type={nasaSearchParams.mediaType} href={item?.href} />
             }
             key={`${data?.date_created}${index}`}
             data={data}
           />
         );
       })}
+
+      {(items?.length as number) === 0 ? (
+        <ErrorText>Sorry, no results found.</ErrorText>
+      ) : null}
+
+      <Pagination
+        current={currentPage}
+        items={items?.length || 0}
+        pagerCallback={handlePageChange}
+        perPage={ITEMS_PER_PAGE}
+      />
     </Box>
   );
 };

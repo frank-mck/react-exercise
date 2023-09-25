@@ -7,9 +7,9 @@ import {
   JustifiedBetweenWrapper,
 } from "./styles";
 
-const MAX_DESCRIPTION = 900;
+const MAX_DESCRIPTION = 600;
 
-const DataItem = ({
+const NasaArticle = ({
   media,
   data,
 }: {
@@ -70,4 +70,4 @@ const DataItem = ({
   );
 };
 
-export default DataItem;
+export default NasaArticle;

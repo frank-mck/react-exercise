@@ -2,22 +2,23 @@ import Image from "next/image";
 import React from "react";
 import { StyledAudio } from "./styles";
 import { ErrorText } from "@cruk/cruk-react-components";
+import useNasaMedia from "../../hooks/useNasaMedia";
 
-const Media = ({
-  type,
-  nasaMedia,
-}: {
-  type: string;
-  nasaMedia: string[] | undefined;
-}) => {
+const Media = ({ type, href }: { type: string; href: string | undefined }) => {
+  const { data: nasaMedia } = useNasaMedia(href);
+
   const MediaView = () => {
+    const validImageUrl = nasaMedia?.find((url) =>
+      ["medium", "small", "large"].some((size) => url.includes(size)),
+    );
+
     switch (type) {
       case "image":
         return (
           <Image
             alt="nasa-image"
             objectFit="cover"
-            src={nasaMedia?.[0] || "/no-image.jpg"}
+            src={validImageUrl || "/no-image.jpg"}
             width={1000}
             height={1000}
           />
@@ -26,12 +27,7 @@ const Media = ({
         return <StyledAudio src={nasaMedia?.[0]} controls />;
       case "video":
         return (
-          <video
-            style={{ borderRadius: "5px" }}
-            width="350"
-            height="200"
-            controls
-          >
+          <video width="100%" height="200" controls>
             <source src={nasaMedia?.[0]} type="video/mp4"></source>
           </video>
         );
