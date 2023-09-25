@@ -30,7 +30,7 @@ export const HomePage = () => {
   };
 
   return (
-    <Box marginTop="s" paddingTop="s">
+    <Box  paddingTop="s">
       <Heading h1>Nasa Form</Heading>
 
       <NasaForm onSubmit={onSubmit} isFetching={isFetching} />

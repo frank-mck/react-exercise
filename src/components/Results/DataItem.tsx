@@ -21,7 +21,9 @@ const DataItem = ({
 
   const keywords = data?.keywords?.[0]
     ?.split(",")
-    .map((word) => <StyledBadge>{word}</StyledBadge>);
+    .map((word, index) => (
+      <StyledBadge key={`${imageUrl}${index}`}>{word}</StyledBadge>
+    ));
 
   const toggleShowMore = () => {
     setShowMore((current) => !current);
@@ -61,8 +63,8 @@ const DataItem = ({
           alt="nasa-image"
           objectFit="cover"
           src={imageUrl || "/no-image.jpg"}
-          width={1200}
-          height={1200}
+          width={1000}
+          height={1000}
         />
 
         <Text textSize="m">

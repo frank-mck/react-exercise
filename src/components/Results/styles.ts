@@ -15,5 +15,5 @@ export const JustifiedBetweenWrapper = styled(Box)`
 `;
 
 export const StyledBadge = styled(Badge)`
-margin: 0 4px;
+margin: 0 0 4px 4px;
 `

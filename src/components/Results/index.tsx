@@ -1,6 +1,7 @@
 import { Box } from "@cruk/cruk-react-components";
 import { NasaResponse, NasaSearchParams } from "../../types";
 import DataItem from "./DataItem";
+import useNasaMedia from "../../hooks/useNasaMedia";
 
 export const Results = ({
   nasaData,
@@ -11,7 +12,8 @@ export const Results = ({
 }) => {
   stringifyData();
   const items = nasaData?.collection?.items;
-
+  const { data } = useNasaMedia(items?.[0]?.href)
+console.log(data)
   function stringifyData() {
     const jsonData = JSON.stringify(nasaData);
 
@@ -24,11 +26,11 @@ export const Results = ({
 
   return (
     <Box>
-      {items?.map((item) => {
+      {items?.map((item, index) => {
         const data = item?.data?.[0];
         const link = item?.links?.[0]?.href;
 
-        return <DataItem data={data} imageUrl={link} />;
+        return <DataItem key={`${data?.date_created}${index}`} data={data} imageUrl={link} />;
       })}
     </Box>
   );
