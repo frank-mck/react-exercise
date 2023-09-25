@@ -20,6 +20,10 @@ production-ready requirement.
 - The user should only see the first 10 items on the page. ✅
 - Code must be clean and production ready ✅ (Testing pending)
 
+## Additional requirements
+
+- Mobile friendly ✅
+
 ## Why Did I Choose React Hook Form Over the Formik Library?
 
 - **React Hook Form:**
