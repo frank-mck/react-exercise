@@ -29,3 +29,9 @@ export const StyledAudio = styled.audio`
   width: 100%;
   min-width: 300px;
 `
+
+export const StyledVideo = styled.video`
+@media (max-width: 768px) {
+  height: 100%;
+}
+`

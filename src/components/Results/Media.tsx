@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { StyledAudio } from "./styles";
+import { StyledAudio, StyledVideo } from "./styles";
 import { ErrorText } from "@cruk/cruk-react-components";
 import useNasaMedia from "../../hooks/useNasaMedia";
 
@@ -27,9 +27,9 @@ const Media = ({ type, href }: { type: string; href: string | undefined }) => {
         return <StyledAudio src={nasaMedia?.[0]} controls />;
       case "video":
         return (
-          <video width="100%" height="200" controls>
+          <StyledVideo width="100%" height="200" controls>
             <source src={nasaMedia?.[0]} type="video/mp4"></source>
-          </video>
+          </StyledVideo>
         );
       default:
         return <ErrorText>Not a valid media type.</ErrorText>;
