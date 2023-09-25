@@ -1,16 +1,31 @@
 import React, { useState } from "react";
 import { DataType } from "../../types";
-import { Box, Button, Text } from "@cruk/cruk-react-components";
-import { StyledBadge, StyledResultsBox } from "./styles";
+import { Box, Button, Heading, Text } from "@cruk/cruk-react-components";
+import {
+  StyledBadge,
+  GidColumnWrapper,
+  JustifiedBetweenWrapper,
+} from "./styles";
+import Image from "next/image";
 
-const MAX_DESCRIPTION = 500;
+const MAX_DESCRIPTION = 900;
 
-const DataItem = ({ data }: { data: DataType | undefined }) => {
+const DataItem = ({
+  data,
+  imageUrl,
+}: {
+  data: DataType | undefined;
+  imageUrl: string | undefined;
+}) => {
   const [showMore, setShowMore] = useState(false);
 
   const keywords = data?.keywords?.[0]
     ?.split(",")
     .map((word) => <StyledBadge>{word}</StyledBadge>);
+
+  const toggleShowMore = () => {
+    setShowMore((current) => !current);
+  };
 
   const Description = () => {
     if (showMore) {
@@ -18,10 +33,6 @@ const DataItem = ({ data }: { data: DataType | undefined }) => {
     } else {
       return `${data?.description?.substring(0, MAX_DESCRIPTION)}`;
     }
-  };
-
-  const toggleShowMore = () => {
-    setShowMore((current) => !current);
   };
 
   const ToggleDescriptionLengthBtns = (): JSX.Element => {
@@ -34,25 +45,33 @@ const DataItem = ({ data }: { data: DataType | undefined }) => {
 
   return (
     <Box key={data?.nasa_id} backgroundColor="#F0F0F0">
-      <StyledResultsBox margin="none">
-        <Text margin="none" textSize="xxl">
+      <JustifiedBetweenWrapper margin="none">
+        <Heading h2 margin="none">
           {data?.title}
-        </Text>
+        </Heading>
         <Box margin="none">{keywords}</Box>
-      </StyledResultsBox>
+      </JustifiedBetweenWrapper>
 
       <Text textSize="l">
         {data?.center ? data?.center : "Center unknown"}:{" "}
         {data?.location ? data?.location : "Location unknown"}
       </Text>
-      <StyledResultsBox>
+      <GidColumnWrapper padding="none" margin="none">
+        <Image
+          alt="nasa-image"
+          objectFit="cover"
+          src={imageUrl || "/no-image.jpg"}
+          width={1200}
+          height={1200}
+        />
+
         <Text textSize="m">
           <Description />
           {data?.description && data?.description.length >= MAX_DESCRIPTION ? (
             <ToggleDescriptionLengthBtns />
           ) : null}
         </Text>
-      </StyledResultsBox>
+      </GidColumnWrapper>
     </Box>
   );
 };

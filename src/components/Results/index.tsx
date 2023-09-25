@@ -1,11 +1,13 @@
 import { Box } from "@cruk/cruk-react-components";
-import { NasaResponse } from "../../types";
+import { NasaResponse, NasaSearchParams } from "../../types";
 import DataItem from "./DataItem";
 
 export const Results = ({
   nasaData,
+  nasaSearchParams,
 }: {
   nasaData: NasaResponse | undefined;
+  nasaSearchParams: NasaSearchParams;
 }) => {
   stringifyData();
   const items = nasaData?.collection?.items;
@@ -23,8 +25,10 @@ export const Results = ({
   return (
     <Box>
       {items?.map((item) => {
-        // const href = item?.href;
-        return <DataItem data={item?.data?.[0]} />;
+        const data = item?.data?.[0];
+        const link = item?.links?.[0]?.href;
+
+        return <DataItem data={data} imageUrl={link} />;
       })}
     </Box>
   );

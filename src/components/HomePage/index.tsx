@@ -1,9 +1,4 @@
-import {
-  Heading,
-  Box,
-  ErrorText,
-  Loader,
-} from "@cruk/cruk-react-components";
+import { Heading, Box, ErrorText, Loader } from "@cruk/cruk-react-components";
 import { NasaSearchParams } from "../../types";
 import Results from "../Results";
 import NasaForm, { defaultParams } from "./NasaForm";
@@ -28,7 +23,9 @@ export const HomePage = () => {
         <ErrorText>Sorry, there was an error fetching the results.</ErrorText>
       );
     } else {
-      return <Results nasaData={nasaData} />;
+      return (
+        <Results nasaData={nasaData} nasaSearchParams={nasaSearchParams} />
+      );
     }
   };
 
