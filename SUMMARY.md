@@ -1,4 +1,5 @@
 # CRUK Technical Exercise (React) Summary
+<img width="792" alt="Screenshot 2023-09-25 at 18 49 30" src="https://github.com/frank-mck/react-exercise/assets/77457834/f7daf66b-8a4c-451b-9003-7ce70d8c3bb1">
 
 ## Summary
 
