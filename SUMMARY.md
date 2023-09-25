@@ -1,22 +1,71 @@
-# CRUK technical exercise (React) Summary
+# CRUK Technical Exercise (React) Summary
 
-## Why have I chosen the React Hook Form over the Formik library?
+## Summary
+
+I thoroughly enjoyed completing this tech test. I am pleased with the results and believe I have accomplished the core requirements effectively. While I'm content with the current state of the project, there are areas where I see potential for improvement. Specifically, I would like to enhance the styling and incorporate smoother animations to elevate the user experience further. Additionally, I would have liked to test the application to meet the 
+production-ready requirement.
+
+
+## Tools and Libraries I used
+- React Hook Form
+- Vod validation library
+- CRUK React Component Library
+
+## Requirements
+
+- Build a form using the CRUK React Component Library ✅
+- Fetch assets from the NASA Images and Video Library API ✅
+- The media returned should be displayed in the list below the form, these may be images, video, or audio clips ✅
+- The user should only see the first 10 items on the page. ✅
+- Code must be clean and production ready ✅ (Testing pending)
+
+## Why Did I Choose React Hook Form Over the Formik Library?
+
+- **React Hook Form:**
+  - Pros:
+    - Ability to isolate component re-renders. React Hook Form is generally considered faster and more lightweight than Formik. It’s easy to understand and has a strong focus on performance.
+  - Cons:
+    - Fewer built-in UI components compared to Formik.
+
+- **Formik:**
+  - Pros:
+    - Offers more control over form state. Provides more features. Easy to use. Offers greater flexibility.
+  - Cons:
+    - May require additional optimization to avoid unnecessary re-renders. Slightly heavier in terms of bundle size compared to the React Hook Form.
+<br />
+
+This choice is based on React Hook Form's user-friendly, performant, lightweight, and flexible nature, aligning with the goal of writing clean and production-ready code with a focus on quality.
+
+## Why Did I Choose Vod Over Yup for Form Validation?
+
+These validation libraries are simple to learn, easy to use and have similar syntax. I opted for Vod simply because it has superior TypeScript support, which enhances the development experience in a TypeScript codebase.
+
+## Setup
+
+Please create a `.env.local` file in the project's root and add an API key for fetching NASA data.
 
 ```
-ReactHookForm: {
-  pros: “Ability to isolate component re-renders. React Hook Form is generally considered to be faster and more lightweight than Formik. It’s easy to understand and has a strong focus on performance.”,
-  cons: “Fewer built-in UI components compared to Formik”,
-}
-
-Formik: {
-  pros: “Offer more control over form state. Offers more features. Ease of use. More flexibility",
-  cons: “May require additional optimization to avoid unnecessary re-renders. Slightly heavier in terms of bundle size compared to React Hook Form”,
-}
+NEXT_PUBLIC_NASA_API_KEY=your_key
 ```
 
-This choice is based on its user-friendly, performant, lightweight and flexible nature, which aligns with the goal of writing clean and production-ready code with a focus on quality.
+## To Run
+To run this project locally, follow these steps:
 
-## Why have a chosen Vod over Yup for form validation?
+Clone the project repository to your local machine:
 
-These two validation libraries are simple to learn, easy to use and have similar syntax.
-I have chosen Vod simply because it has superior TypeScript, which would provide a better development experience in a TypeScript codebase.
+```
+git clone <repository-url>
+```
+
+Navigate to the project directory:
+
+```
+cd react-exercise
+```
+
+Install the project dependencies and start the client:
+
+```
+npm install
+npm run dev
+```
