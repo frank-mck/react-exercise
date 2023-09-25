@@ -1,7 +1,6 @@
 import {
   Heading,
   Box,
-  Text,
   ErrorText,
   Loader,
 } from "@cruk/cruk-react-components";
